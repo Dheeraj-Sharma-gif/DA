@@ -1,0 +1,86 @@
+x = c(1,3,5,19)
+y = c(2,4,5,20)
+print(cor(x,y))
+
+print(cor(x, y, method = "pearson"))
+print(cor(x, y, method = "kendall"))
+print(cor(x, y, method = "spearman"))
+
+program 1: 
+
+# women dataset
+
+p = women$height
+q = women$weight
+print(p)
+print(q)
+
+# Plotting the data
+plot(p, q, 
+     main = "Women", 
+     xlab = "Height", 
+     ylab = "Weight", 
+     pch = 19,  
+     frame = FALSE) 
+
+#positive corelation
+s = c(1,12,45,46,47,38,29,40)
+t = c(10,15,20,25,30,35,40,45,50)
+cor(s,t)
+plot(s, t, 
+     main = "Women", 
+     xlab = "Height", 
+     ylab = "Weight", 
+     pch = 19,  
+     frame = FALSE) 
+
+#negative corelation
+s = c(100,90,80,70,60,50,40)
+t = c(40,50,60,70,80,90,100)
+cor(s, t)
+
+plot(s, t, 
+     main = "Women", 
+     xlab = "Height", 
+     ylab = "Weight", 
+     pch = 19, 
+     frame = FALSE)
+
+#zero corelation
+s = c(10,20,30,40,50,60,70)
+t = c(50,50,50,50,50,50,50)
+cor(s, t)
+
+plot(s, t, 
+     main = "Women", 
+     xlab = "Height", 
+     ylab = "Weight", 
+     pch = 19, 
+     frame = FALSE)x
+
+
+# Create the data frame
+x = 1:20
+y = sample(1000, 20, replace = TRUE)
+df = data.frame(x, y)
+
+library(ggplot2)
+
+ggplot(df, aes(x, y, group = 1)) + 
+  geom_boxplot()
+
+#mtcars dataset
+
+#positive corelation
+head(mtcars)
+x = mtcars$cyl
+y = mtcars$carb
+cor(x,y)
+plot(x,y, main = "Mtcars", xlab ="cyl", ylab = "carb", pch =19, frame =FALSE)
+
+#negative corelation
+head(mtcars)
+x = mtcars$cyl
+y = mtcars$mpg
+cor(x,y)
+plot(x,y, main = "Mtcars", xlab ="cyl", ylab = "mpg", pch =19, frame =FALSE)
