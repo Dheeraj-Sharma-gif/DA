@@ -1,0 +1,31 @@
+data <- data.frame(
+  TransactionID = c("T1", "T2", "T3", "T4", "T5", "T6"),
+  Items = c(
+    "Hot Dogs,Buns,Ketchup",
+    "Hot Dogs,Buns",
+    "Hot Dogs,Coke,Chips",
+    "Chips,Coke",
+    "Chips,Ketchup",
+    "Hot Dogs,Coke,Chips"
+  )
+)
+
+write.table(data, file = "C:/Users/panka/Downloads/supermarket3.csv", sep = ",", row.names = FALSE, col.names = TRUE, quote = FALSE)
+
+library(arules)
+
+transactions <- read.transactions("C:/Users/panka/Downloads/supermarket3.csv", format = "basket", sep = ",", cols = 2)
+
+summary(transactions)
+
+rules <- apriori(transactions, parameter = list(minlen = 2, maxlen = 5, supp = 0.2, conf = 0.5))
+
+
+inspect(rules)
+
+write(rules, file = "C:/Users/panka/Downloads/association_rules.csv", sep = ",", quote = TRUE)
+
+library(arulesViz)
+plot(rules)
+plot(rules, method = "grouped")
+plot(rules, method = "graph", control = list(type = "items"))

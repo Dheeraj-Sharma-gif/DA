@@ -1,0 +1,60 @@
+require("class")
+require("datasets")
+
+data("iris")
+
+str(iris)
+summary(iris)
+head(iris)
+
+set.seed(99)
+
+rnum <- sample(rep(1:150))
+iris <- iris[rnum, ]
+
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+
+iris.new <- as.data.frame(lapply(iris[, 1:4], normalize))
+head(iris.new)
+
+iris.train <- iris.new[1:130, ]
+iris.train.target <- iris[1:130, 5]
+iris.test <- iris.new[131:150, ]
+iris.test.target <- iris[131:150, 5]
+
+model1 <- knn(train = iris.train, test = iris.test, cl = iris.train.target, k = 16)
+
+table(iris.test.target, model1)
+
+--------
+
+df <- data.frame(
+  hours = c(1, 2, 4, 5, 5, 6, 6, 7, 8, 10, 11, 11, 12, 12, 14),
+  score = c(64, 66, 76, 73, 74, 81, 83, 82, 80, 88, 84, 82, 91, 93, 89)
+)
+
+head(df)
+
+scatter.smooth(df$hours, df$score,
+               main = "Hours Studied vs. Exam Score",
+               xlab = "Hours Studied",
+               ylab = "Exam Score")
+
+boxplot(df$score, main = "Boxplot of Exam Scores", ylab = "Score")
+
+model <- lm(score ~ hours, data = df)
+
+summary(model)
+
+res <- resid(model)
+
+plot(fitted(model), res,
+     main = "Residuals vs. Fitted Values",
+     xlab = "Fitted Values",
+     ylab = "Residuals")
+abline(h = 0, col = "red", lwd = 2)
+
+qqnorm(res, main = "Q-Q Plot of Residuals")
+qqline(res, col = "blue", lwd = 2)
