@@ -1,0 +1,380 @@
+x = c(1,3,5,19)
+y = c(2,4,5,20)
+print(cor(x,y))
+
+print(cor(x, y, method = "pearson"))
+print(cor(x, y, method = "kendall"))
+print(cor(x, y, method = "spearman"))
+
+program 1: 
+  
+  
+p = women$height
+q = women$weight
+print(p)
+print(q)
+plot(p, q, 
+     main = "Women", 
+     xlab = "Height", 
+     ylab = "Weight", 
+     pch = 19,  
+     frame = FALSE) 
+
+
+p = c(1,12,45,46,47,38,29,40)
+q = c(10,15,20,25,30,35,40,45)
+cor(p,q)
+plot(p, q, 
+     main = "Women", 
+     xlab = "Height", 
+     ylab = "Weight", 
+     pch = 19,  
+     frame = FALSE) 
+
+
+p = c(100,90,80,70,60,50,40)
+q = c(40,50,60,70,80,90,100)
+cor(p, q)
+
+plot(p, q, 
+     main = "Women", 
+     xlab = "Height", 
+     ylab = "Weight", 
+     pch = 19, 
+     frame = FALSE)
+
+
+p = c(10,20,30,40,50,60,70)
+q = c(50,50,50,50,50,50,50)
+cor(p, q)
+
+plot(p, q, 
+     main = "Women", 
+     xlab = "Height", 
+     ylab = "Weight", 
+     pch = 19, 
+     frame = FALSE)
+
+
+#ggplot
+x = 1:20
+y = sample(1000, 20, replace = TRUE)
+df = data.frame(x, y)
+
+library(ggplot2)
+
+ggplot(df, aes(x, y, group = 1)) + 
+  geom_boxplot()
+
+
+#positive corelation
+head(mtcars)
+x = mtcars$cyl
+y = mtcars$carb
+cor(x,y)
+plot(x,y, main = "Mtcars", xlab ="cyl", ylab = "carb", pch =19, frame =FALSE)
+
+#negative corelation
+head(mtcars)
+x = mtcars$cyl
+y = mtcars$mpg
+cor(x,y)
+plot(x,y, main = "Mtcars", xlab ="cyl", ylab = "mpg", pch =19, frame =FALSE)
+
+-------------------------------
+
+LungCapData <- read.csv("C:/Users/panka/Downloads/LungCapData.csv", header = TRUE)
+LungCapData <- data.frame(LungCapData)
+attach(LungCapData)
+
+AgeGroups <- cut(LungCapData$Age, breaks = c(0, 13, 15, 17, 25), labels = c("<13", "14/15", "16/17", ">=18"))
+
+boxplot(LungCapData$LungCap ~ LungCapData$Smoke, ylab = "Capacity", main = "Lung Capacity of Smokers Vs Non-Smokers", las = 1)
+
+boxplot(LungCapData$LungCap[LungCapData$Age >= 18] ~ LungCapData$Smoke[LungCapData$Age >= 18],
+        ylab = "Capacity", main = "Lung Capacity of Smokers Vs Non-Smokers", las = 1)
+
+boxplot(LungCapData$LungCap ~ LungCapData$Smoke * AgeGroups,
+        ylab = "Capacity", xlab = "", main = "Lung Capacity of Smokers Vs Non-Smokers", col = c(4, 2), las = 2)
+
+--------------------------------
+
+airqual = airquality
+summary(airqual)
+airqual[!complete.cases(airqual), ]
+
+boxplot(airqual)
+
+boxplot(airqual$Ozone, horizontal = TRUE)
+boxplot(airqual$Wind, horizontal = TRUE)
+
+Updated_airqual = subset(airqual, Ozone < 130 & Wind < 17)
+boxplot(Updated_airqual)
+
+airqual$Ozone[is.na(airqual$Ozone)] <- mean(Updated_airqual$Ozone)
+airqual$Solar.R[is.na(airqual$Solar.R)] <- mean(Updated_airqual$Solar.R, na.rm = TRUE)
+summary(airqual)
+
+data_airquality = subset(airqual, Ozone < 70 & Wind < 17)
+boxplot(data_airquality)
+
+data_airquality = subset(airqual, Ozone < 70 & Wind < 17 & Wind > 2)
+boxplot(data_airquality)
+
+-------------------
+
+if (!require("psych")) {
+  install.packages("psych")
+  library(psych)
+} else {
+  library(psych)
+}
+
+data("iris")
+str(iris)
+summary(iris)
+
+set.seed(111)
+ind <- sample(2, nrow(iris), replace = TRUE, prob = c(0.8, 0.2))
+training <- iris[ind == 1, ]
+testing <- iris[ind == 2, ]
+
+pairs.panels(training[,-5], gap = 0, bg = c("red", "yellow", "blue")[training$Species], pch = 21)
+
+pc <- prcomp(training[,-5], center = TRUE, scale. = TRUE)
+attributes(pc)
+pc$center
+pc$scale
+print(pc)
+summary(pc)
+
+------------------------
+
+rm(list = ls(all.names = TRUE))
+
+x <- data.frame(
+  name = c("Bala", "Ganesh", "Geevan"),
+  age = c(43, 38, 42),
+  education = c(2.0, 4.2, 4.1)
+)
+
+print(x)
+age = x$age
+print(age)
+edu = x$education
+print(edu)
+
+M1 <- matrix(c(age, edu), nrow = 3, byrow = FALSE)
+print(M1)
+E1 = dist(M1, method = 'euclidean')
+print(E1)
+
+
+ageD = age / 10
+print(ageD)
+
+M2 <- matrix(c(ageD, edu), nrow = 3, byrow = FALSE)
+print(M2)
+E2 = dist(M2, method = 'euclidean')
+print(E2)
+
+rangA = max(age) - min(age)
+mi_maA = (age - min(age)) / rangA
+print(mi_maA)
+
+rangE = max(edu) - min(edu)
+mi_maE = (edu - min(edu)) / rangE
+print(mi_maE)
+
+M3 <- matrix(c(mi_maA, mi_maE), nrow = 3, byrow = FALSE)
+print(M3)
+E3 = dist(M3, method = 'euclidean')
+print(E3)
+
+print("Data frame with different similarity measure matrix results_")
+print(x)
+print(E1)
+print(E2)
+print(E3)
+
+-----------------------------------
+
+contact_info <- data.frame(
+  Contact = c("Andrew", "Bernhard", "Carolina", "Dennis", "Eve", "Fred", "Gwyneth", "Hayden",
+              "Irene", "James", "Kevin", "Lea", "Marcus", "Nigel"),
+  Maxtemp = c(25, 31, 15, 20, 10, 12, 16, 26, 15, 21, 30, 13, 8, 12),
+  Weight = c(77, 110, 70, 85, 65, 75, 75, 63, 55, 66, 95, 72, 83, 115),
+  Height = c(175, 195, 172, 180, 168, 173, 180, 165, 158, 163, 190, 172, 185, 192),
+  Years = c(10, 12, 2, 16, 0, 6, 3, 2, 5, 14, 1, 11, 3, 15),
+  Gender = c("M", "M", "F", "M", "F", "M", "F", "F", "F", "M", "M", "F", "F", "M"),
+  Company = c("Good", "Good", "Bad", "Good", "Bad", "Good", "Bad", "Bad",
+              "Bad", "Good", "Bad", "Good", "Bad", "Good")
+)
+
+
+download_path <- file.path(Sys.getenv("USERPROFILE"), "Downloads", "filter.csv")
+
+write.csv(contact_info, file = download_path, row.names = FALSE)
+
+rm(list = ls(all.names = TRUE))
+input = read.csv("C:/Users/panka/Downloads/filter.csv")
+print(input)
+x = cor(input[, c(2:5)])
+print(x)
+pairs(input[, c(2:5)])
+y = x[4, 1:3]
+print(y)
+x = sort(y, decreasing = TRUE)
+print(x)
+cnt = 1
+print("selected attributes")
+while(cnt <= length(y)) {
+  if (y[cnt] > .5)
+    print(y[cnt])
+  cnt = cnt + 1
+}
+-------------------------------
+data(iris)
+
+str(iris)
+
+if (!require(ClusterR)) install.packages("ClusterR")
+if (!require(cluster)) install.packages("cluster")
+
+library(ClusterR)
+library(cluster)
+
+iris_1 <- iris[, -5]
+
+set.seed(240)
+kmeans.re <- kmeans(iris_1, centers = 3, nstart = 20)
+
+
+print(kmeans.re)
+
+
+print(kmeans.re$cluster)
+
+cm <- table(iris$Species, kmeans.re$cluster)
+print(cm)
+
+plot(iris_1[, c("Sepal.Length", "Sepal.Width")])
+plot(iris_1[, c("Sepal.Length", "Sepal.Width")], col = kmeans.re$cluster)
+plot(iris_1[, c("Sepal.Length", "Sepal.Width")],
+     col = kmeans.re$cluster,
+     main = "K-means with 3 clusters")
+
+print(kmeans.re$centers)
+print(kmeans.re$centers[, c("Sepal.Length", "Sepal.Width")])
+
+points(kmeans.re$centers[, c("Sepal.Length", "Sepal.Width")],
+       col = 1:3, pch = 8, cex = 3)
+
+y_kmeans <- kmeans.re$cluster
+clusplot(iris_1[, c("Sepal.Length", "Sepal.Width")],
+         y_kmeans,
+         lines = 0,
+         shade = TRUE,
+         color = TRUE,
+         labels = 2,
+         plotchar = FALSE,
+         main = "Cluster iris",
+         xlab = 'Sepal.Length',
+         ylab = 'Sepal.Width')
+
+----------------------------
+
+data <- data.frame(
+  TransactionID = c("T1", "T2", "T3", "T4", "T5", "T6"),
+  Items = c(
+    "Hot Dogs,Buns,Ketchup",
+    "Hot Dogs,Buns",
+    "Hot Dogs,Coke,Chips",
+    "Chips,Coke",
+    "Chips,Ketchup",
+    "Hot Dogs,Coke,Chips"
+  )
+)
+
+write.table(data, file = "C:/Users/panka/Downloads/supermarket3.csv", sep = ",", row.names = FALSE, col.names = TRUE, quote = FALSE)
+
+library(arules)
+
+transactions <- read.transactions("C:/Users/panka/Downloads/supermarket3.csv", format = "basket", sep = ",", cols = 2)
+
+summary(transactions)
+
+rules <- apriori(transactions, parameter = list(minlen = 2, maxlen = 5, supp = 0.2, conf = 0.5))
+
+
+inspect(rules)
+
+write(rules, file = "C:/Users/panka/Downloads/association_rules.csv", sep = ",", quote = TRUE)
+
+library(arulesViz)
+plot(rules)
+plot(rules, method = "grouped")
+plot(rules, method = "graph", control = list(type = "items"))
+
+---------------------------
+
+require("class")
+require("datasets")
+
+data("iris")
+
+str(iris)
+summary(iris)
+head(iris)
+
+set.seed(99)
+
+rnum <- sample(rep(1:150))
+iris <- iris[rnum, ]
+
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+
+iris.new <- as.data.frame(lapply(iris[, 1:4], normalize))
+head(iris.new)
+
+iris.train <- iris.new[1:130, ]
+iris.train.target <- iris[1:130, 5]
+iris.test <- iris.new[131:150, ]
+iris.test.target <- iris[131:150, 5]
+
+model1 <- knn(train = iris.train, test = iris.test, cl = iris.train.target, k = 16)
+
+table(iris.test.target, model1)
+
+--------
+
+df <- data.frame(
+  hours = c(1, 2, 4, 5, 5, 6, 6, 7, 8, 10, 11, 11, 12, 12, 14),
+  score = c(64, 66, 76, 73, 74, 81, 83, 82, 80, 88, 84, 82, 91, 93, 89)
+)
+
+head(df)
+
+scatter.smooth(df$hours, df$score,
+               main = "Hours Studied vs. Exam Score",
+               xlab = "Hours Studied",
+               ylab = "Exam Score")
+
+boxplot(df$score, main = "Boxplot of Exam Scores", ylab = "Score")
+
+model <- lm(score ~ hours, data = df)
+
+summary(model)
+
+res <- resid(model)
+
+plot(fitted(model), res,
+     main = "Residuals vs. Fitted Values",
+     xlab = "Fitted Values",
+     ylab = "Residuals")
+abline(h = 0, col = "red", lwd = 2)
+
+qqnorm(res, main = "Q-Q Plot of Residuals")
+qqline(res, col = "blue", lwd = 2)
