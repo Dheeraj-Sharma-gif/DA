@@ -5,9 +5,6 @@ print(cor(x,y))
 print(cor(x, y, method = "pearson"))
 print(cor(x, y, method = "kendall"))
 print(cor(x, y, method = "spearman"))
-
-program 1: 
-  
   
 p = women$height
 q = women$weight
